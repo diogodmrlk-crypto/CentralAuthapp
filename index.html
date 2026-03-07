@@ -21,6 +21,64 @@ html,body{font-family:'DM Sans',sans-serif;background:#c7cfe0;display:flex;justi
 
 .phone{width:100vw;max-width:430px;height:100dvh;max-height:932px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 80px rgba(0,0,0,0.35);}
 
+/* ===== LOGIN SYSTEM STYLES ===== */
+#login-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a56e8 0%, #1240c0 100%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  color: white;
+  text-align: center;
+}
+.login-container {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.login-logo { font-size: 48px; margin-bottom: 20px; }
+.login-title { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.login-subtitle { font-size: 14px; opacity: 0.8; margin-bottom: 30px; }
+.login-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: white;
+  color: #111;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+}
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.login-btn:active { transform: scale(0.98); }
+.login-error { color: #ff4d4d; font-size: 13px; margin-top: 15px; font-weight: 600; display: none; }
+
 .page{display:none;flex-direction:column;height:100%;overflow:hidden;width:100%;}
 .page.active{display:flex;width:100%;}
 .scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:84px;width:100%;}
@@ -123,7 +181,6 @@ canvas{width:100%!important;display:block;}
 .pkg-icon{width:38px;height:38px;border-radius:12px;background:var(--blue-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .pkg-body{flex:1;}
 .pkg-name{font-size:14px;font-weight:700;color:var(--text);}
-/* URL OCULTA — badge visual discreta */
 .pkg-url-hidden{display:inline-flex;align-items:center;gap:5px;background:#f3f4f6;border-radius:8px;padding:3px 9px;margin-top:5px;font-size:11px;color:var(--gray);font-weight:600;letter-spacing:0.05em;}
 .pkg-url-hidden svg{flex-shrink:0;}
 .pkg-sent{font-size:11px;color:var(--blue);font-weight:600;margin-top:4px;}
@@ -156,484 +213,472 @@ canvas{width:100%!important;display:block;}
 .pr-icon-wrap.green{background:#22c55e;}
 .pr-icon-wrap.orange{background:#f59e0b;}
 .pr-icon-wrap.purple{background:#8b5cf6;}
-.pr-label{font-size:15px;font-weight:500;color:var(--text);}
-.pr-val{font-size:13px;color:var(--gray);}
-.pr-chevron{color:#9ca3af;}
-.profile-version{text-align:center;font-size:12px;font-weight:700;color:var(--gray);padding:10px 0 20px;}
 
-/* ===== LOGIN SESSION PAGE ===== */
-.session-card{background:var(--white);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow);position:relative;}
-.session-card.is-current{border-left:3px solid var(--blue);}
-.session-row{display:flex;justify-content:space-between;margin-bottom:5px;align-items:flex-start;}
-.session-row:last-child{margin-bottom:0;}
-.session-label{font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;min-width:120px;}
-.session-value{font-size:12px;color:var(--gray);text-align:right;flex:1;margin-left:8px;word-break:break-all;}
-.session-current-badge{display:inline-flex;align-items:center;gap:4px;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;flex-shrink:0;}
-.session-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #f3f4f6;}
-.session-device-name{font-size:13px;font-weight:700;color:var(--text);}
-.sessions-info-bar{background:#eff6ff;border-radius:12px;padding:10px 14px;margin-bottom:12px;border:1px solid #bfdbfe;display:flex;align-items:center;gap:8px;}
-.sessions-info-bar-text{font-size:11px;color:#1d4ed8;font-weight:600;}
+.pr-label{font-size:14px;font-weight:600;color:var(--text);}
+.pr-sub{font-size:11px;color:var(--gray);margin-top:1px;}
+.pr-val{font-size:13px;color:var(--blue);font-weight:700;}
 
 /* ===== MODALS ===== */
-.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:100;display:none;align-items:flex-end;}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;justify-content:center;z-index:1000;backdrop-filter:blur(3px);}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--white);border-radius:24px 24px 0 0;padding:20px 18px;width:100%;animation:slideUp 0.28s cubic-bezier(.32,.72,0,1);max-height:88%;overflow-y:auto;}
-.modal::-webkit-scrollbar{display:none;}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:36px;height:4px;background:#e5e7eb;border-radius:99px;margin:0 auto 16px;}
+.modal{background:var(--bg);width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:12px 20px 30px;box-shadow:0 -10px 40px rgba(0,0,0,0.15);animation:slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{width:40px;height:5px;background:#d1d5db;border-radius:10px;margin:0 auto 15px;}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.modal-title{font-size:17px;font-weight:700;color:var(--text);}
-.modal-close-btn{background:var(--bg);border:none;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.modal-title{font-size:18px;font-weight:800;color:var(--text);}
+.modal-close-btn{background:none;border:none;cursor:pointer;padding:5px;}
 
-/* FORM */
-.form-group{margin-bottom:15px;}
-.form-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;display:block;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
 .req{color:var(--red);}
-.form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:11px;font-size:15px;font-family:inherit;outline:none;background:var(--white);transition:border-color 0.2s;color:var(--text);}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--white);border:1.5px solid #e5e7eb;border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);}
-.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
-.form-textarea{resize:none;min-height:100px;line-height:1.5;}
-.form-hint{font-size:11px;color:var(--blue);margin-top:5px;font-weight:600;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-hint{font-size:11px;color:var(--gray);margin-top:6px;line-height:1.4;}
 
-.preview-box{background:var(--bg);border-radius:11px;padding:12px 14px;font-size:12.5px;font-family:monospace;color:var(--text);word-break:break-all;border:1.5px dashed #c7d2fe;margin-bottom:15px;}
-.preview-label{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e5e7eb;margin-bottom:10px;}
+.toggle-row-txt .tl{font-size:13px;font-weight:700;color:var(--text);}
+.toggle-row-txt .ts{font-size:11px;color:var(--gray);}
 
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-top:1px solid #f3f4f6;}
-.toggle-row-txt .tl{font-size:14px;font-weight:600;color:var(--text);}
-.toggle-row-txt .ts{font-size:11px;color:var(--gray);margin-top:2px;}
+.preview-label{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-top:15px;margin-bottom:6px;}
+.preview-box{background:#f8f9ff;border:1.5px dashed #c7d2fe;border-radius:12px;padding:14px;text-align:center;font-family:monospace;font-size:13px;color:var(--blue);font-weight:700;word-break:break-all;}
 
-.create-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;margin-top:14px;letter-spacing:0.02em;}
-.create-btn:active{transform:scale(0.97);opacity:0.9;}
-.create-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.create-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:15px;border-radius:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:10px;box-shadow:0 4px 12px rgba(26,86,232,0.25);transition:transform 0.1s;}
+.create-btn:active{transform:scale(0.97);}
+.create-btn:disabled{opacity:0.6;cursor:not-allowed;}
 
-/* Language option */
-.lang-option{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid #f3f4f6;cursor:pointer;border-radius:10px;transition:background 0.1s;}
-.lang-option:last-child{border-bottom:none;}
-.lang-option:active{background:var(--bg);}
-.lang-flag{font-size:24px;}
-.lang-name{flex:1;font-size:15px;font-weight:500;color:var(--text);}
-.lang-check{width:20px;height:20px;border-radius:50%;border:2px solid #c7d2fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
+.result-key-item{background:var(--white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;border:1px solid #e5e7eb;}
+.result-key-text{font-size:12px;font-family:monospace;font-weight:700;color:var(--text);}
+.result-copy-btn{background:var(--blue);border:none;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+.device-action-info{background:var(--white);border-radius:14px;padding:14px;margin-bottom:16px;border:1px solid #e5e7eb;}
+.device-action-info-key{font-size:14px;font-weight:700;color:var(--text);font-family:monospace;}
+.device-action-info-dev{font-size:12px;color:var(--gray);margin-top:4px;}
+.device-action-list{display:flex;flex-direction:column;gap:10px;}
+.device-action-item{background:var(--white);border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1px solid transparent;transition:all 0.15s;}
+.device-action-item:active{background:var(--blue-l);border-color:var(--blue);}
+.dai-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dai-icon.reset{background:#e0f2fe;}
+.dai-icon.revoke{background:#fee2e2;}
+.dai-label{font-size:13px;font-weight:700;color:var(--text);}
+.dai-sub{font-size:11px;color:var(--gray);margin-top:2px;}
+
+.lang-option{display:flex;align-items:center;gap:12px;padding:14px;background:var(--white);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:background 0.1s;}
+.lang-option:active{background:var(--blue-l);}
+.lang-flag{font-size:20px;}
+.lang-name{font-size:14px;font-weight:600;color:var(--text);flex:1;}
+.lang-check{width:20px;height:20px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;}
 .lang-check.selected{background:var(--blue);border-color:var(--blue);}
 .lang-check.selected::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
 
-/* Device Action Modal */
-.device-action-list{margin-top:4px;}
-.device-action-item{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px solid #f3f4f6;cursor:pointer;border-radius:10px;transition:background 0.1s;}
-.device-action-item:last-child{border-bottom:none;}
-.device-action-item:active{background:var(--bg);}
-.dai-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.dai-icon.reset{background:#e0f2fe;}
-.dai-icon.revoke{background:#fee2e2;}
-.dai-label{font-size:14px;font-weight:600;color:var(--text);}
-.dai-sub{font-size:11px;color:var(--gray);margin-top:2px;}
-.device-action-info{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:14px;}
-.device-action-info-key{font-size:11px;font-family:monospace;font-weight:700;color:var(--text);word-break:break-all;}
-.device-action-info-dev{font-size:11px;color:var(--gray);margin-top:3px;}
+.support-hero{text-align:center;padding:10px 0 20px;}
+.support-hero-icon{font-size:40px;margin-bottom:10px;}
+.support-hero-title{font-size:18px;font-weight:800;color:var(--text);}
+.support-hero-sub{font-size:12px;color:var(--gray);margin-top:4px;}
 
-/* Support form */
-.support-hero{background:linear-gradient(135deg,var(--blue),var(--blue-d));border-radius:14px;padding:18px;margin-bottom:18px;text-align:center;}
-.support-hero-icon{font-size:32px;margin-bottom:8px;}
-.support-hero-title{font-size:16px;font-weight:700;color:#fff;}
-.support-hero-sub{font-size:12px;color:rgba(255,255,255,0.75);margin-top:4px;}
+/* ===== SESSIONS PAGE ===== */
+.session-card{background:var(--white);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);border:1.5px solid transparent;transition:all 0.2s;}
+.session-card.is-current{border-color:var(--blue);background:#f8faff;}
+.session-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f3f4f6;}
+.session-device-name{font-size:14px;font-weight:800;color:var(--text);}
+.session-current-badge{background:var(--blue);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;text-transform:uppercase;letter-spacing:0.05em;}
+.session-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.session-label{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.04em;}
+.session-value{font-size:12px;font-weight:600;color:var(--text);}
 
 /* ===== BOTTOM NAV ===== */
-.bottom-nav{position:absolute;bottom:0;left:0;right:0;height:72px;background:var(--white);border-top:1px solid #e9ecf3;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;padding:0 4px;z-index:50;box-shadow:0 -4px 24px rgba(0,0,0,0.07);}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px 4px;border-radius:12px;transition:all 0.15s;position:relative;}
-.nav-label{font-size:10px;font-weight:600;color:var(--gray);transition:color 0.15s;letter-spacing:0.02em;}
-.nav-item.active .nav-label{color:var(--blue);}
-.nav-item svg{transition:all 0.15s;color:var(--gray);}
-.nav-item.active svg{color:var(--blue);}
+.bottom-nav{position:absolute;bottom:0;left:0;width:100%;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);display:flex;justify-content:space-around;padding:10px 6px 24px;border-top:1px solid rgba(0,0,0,0.05);z-index:100;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--gray);transition:all 0.2s;flex:1;}
+.nav-item.active{color:var(--blue);}
+.nav-label{font-size:10px;font-weight:700;letter-spacing:0.02em;}
 
-/* ===== MISC ===== */
-.loading{text-align:center;padding:48px 20px;color:var(--gray);}
-.spinner{width:28px;height:28px;border:3px solid var(--blue-l);border-top-color:var(--blue);border-radius:50%;animation:spin 0.75s linear infinite;margin:0 auto 12px;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.empty{text-align:center;padding:56px 20px;color:var(--gray);}
-.empty-icon{font-size:44px;margin-bottom:12px;}
-.empty-text{font-size:14px;font-weight:500;}
-.toast{position:absolute;top:72px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:300;white-space:nowrap;animation:toastAnim 3.2s ease forwards;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,0.25);}
-@keyframes toastAnim{0%{opacity:0;transform:translateX(-50%) translateY(-8px)}12%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
+.toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(17,24,39,0.9);color:#fff;padding:10px 18px;border-radius:12px;font-size:12px;font-weight:700;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,0.2);animation:toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+@keyframes toastIn{from{transform:translate(-50%,20px);opacity:0;}to{transform:translate(-50%,0);opacity:1;}}
 
-.result-key-item{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.result-key-text{font-size:12px;font-family:monospace;color:var(--text);font-weight:600;flex:1;word-break:break-all;}
-.result-copy-btn{background:var(--blue);border:none;cursor:pointer;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;color:var(--gray);font-size:13px;font-weight:600;}
+.spinner{width:24px;height:24px;border:3px solid var(--blue-l);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty{text-align:center;padding:50px 20px;color:var(--gray);}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:0.5;}
+.empty-text{font-size:14px;font-weight:600;}
 
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.section-btn{background:none;border:none;cursor:pointer;font-size:12px;font-weight:700;color:var(--blue);font-family:inherit;}
-.limit-pill{background:var(--blue-l);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--blue);}
-
-@media(max-width:430px){.phone{max-height:100dvh;border-radius:0;}html,body{background:var(--bg);}}
 </style>
 </head>
 <body>
-<div class="phone">
 
-<!-- ========== HOME ========== -->
-<div class="page active" id="page-home">
-  <div class="home-header">
-    <div class="home-top">
-      <div class="user-info">
-        <div class="avatar">G</div>
-        <div>
-          <div class="user-name">GHOST DASH</div>
-          <div class="user-plan">✦ Gold • Ativo</div>
+<!-- TELA DE LOGIN -->
+<div id="login-page">
+  <div class="login-container">
+    <div class="login-logo">🔐</div>
+    <div class="login-title">Acesso Restrito</div>
+    <div class="login-subtitle">Insira sua Key de acesso para entrar</div>
+    <input type="text" id="access-key" class="login-input" placeholder="FERRAODEVX" maxlength="20">
+    <button class="login-btn" onclick="validateKey()">Entrar</button>
+    <div id="login-error" class="login-error">Key inválida ou já utilizada.</div>
+  </div>
+</div>
+
+<div class="phone" id="main-app" style="display:none;">
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page active">
+    <div class="home-header">
+      <div class="home-top">
+        <div class="user-info">
+          <div class="avatar">G</div>
+          <div>
+            <div class="user-name">Ferrao Dev</div>
+            <div class="user-plan">Plano Premium • Ativo</div>
+          </div>
+        </div>
+        <div class="header-icons">
+          <button><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+          <button onclick="openModal('lang-modal')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></button>
         </div>
       </div>
-      <div class="header-icons">
-        <button onclick="refreshAll()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
-        </button>
-        <button onclick="openCreateModal()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="limit-bar-wrap">
-      <div class="limit-row">
-        <span class="limit-label" data-i18n="keys_generated">Keys Geradas</span>
-        <span class="limit-count" id="limit-count-text">0 / 5.000</span>
-      </div>
-      <div class="limit-bar-bg"><div class="limit-bar-fill" id="limit-bar" style="width:0%"></div></div>
-    </div>
-    <div class="stats-cards">
-      <div class="stat-card" onclick="navigate('keys')">
-        <div class="stat-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg>Keys
+      
+      <div class="limit-bar-wrap">
+        <div class="limit-row">
+          <div class="limit-label">Consumo de Chaves</div>
+          <div class="limit-count" id="limit-count-text">0 / 5.000</div>
         </div>
-        <div class="stat-num" id="stat-total">–</div>
-        <div class="stat-footer">
-          <div><div class="stat-sub" data-i18n="pending">Pendentes</div><div class="stat-sub-val" id="stat-pending">–</div></div>
-          <div class="go-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </div>
+        <div class="limit-bar-bg"><div class="limit-bar-fill" id="limit-bar" style="width: 0%;"></div></div>
       </div>
-      <div class="stat-card" onclick="navigate('devices')">
-        <div class="stat-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Devices
+
+      <div class="stats-cards">
+        <div class="stat-card" onclick="navigate('keys')">
+          <div class="stat-label">Total de Keys</div>
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-footer"><span class="stat-sub">Pendentes: <b id="stat-pending">0</b></span><div class="go-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
         </div>
-        <div class="stat-num" id="stat-devices">–</div>
-        <div class="stat-footer">
-          <div><div class="stat-sub" data-i18n="active">Ativas</div><div class="stat-sub-val" id="stat-active">–</div></div>
-          <div class="go-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <div class="stat-card" onclick="navigate('devices')">
+          <div class="stat-label">Dispositivos</div>
+          <div class="stat-num" id="stat-devices">0</div>
+          <div class="stat-footer"><span class="stat-sub">Ativos: <b id="stat-active">0</b></span><div class="go-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="home-body">
-    <div class="quick-actions">
-      <div class="qa-btn" onclick="openCreateModal()">
-        <div class="qa-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg></div>
-        <span class="qa-label" data-i18n="create_key">Criar Key</span>
-      </div>
-      <div class="qa-btn" onclick="navigate('packages')">
-        <div class="qa-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-        <span class="qa-label">Packages</span>
-      </div>
-      <div class="qa-btn" onclick="copyAllPending()">
-        <div class="qa-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
-        <span class="qa-label" data-i18n="copy_all">Copiar All</span>
-      </div>
-      <div class="qa-btn" onclick="navigate('profile')">
-        <div class="qa-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-        <span class="qa-label" data-i18n="profile">Perfil</span>
-      </div>
-    </div>
-    <div class="section-header"><span class="section-title" data-i18n="recent_activations">Ativações Recentes</span></div>
-    <div class="chart-card">
-      <div class="chart-legend"><div class="chart-dot"></div><span class="chart-legend-label" data-i18n="keys_per_day">Keys geradas por dia</span></div>
-      <canvas id="mainChart" height="170"></canvas>
-    </div>
-    <div class="section-header">
-      <span class="section-title" data-i18n="latest_keys">Últimas Keys</span>
-      <button class="section-btn" onclick="navigate('keys')" data-i18n="see_all">Ver todas →</button>
-    </div>
-    <div id="home-keys-list" style="margin-bottom:20px;"></div>
-  </div>
-</div>
 
-<!-- ========== KEYS ========== -->
-<div class="page" id="page-keys">
-  <div class="page-header">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg>
-    <span class="page-header-title">Keys <span class="limit-pill" id="keys-count-pill">0</span></span>
-    <div class="page-header-actions">
-      <button class="ph-btn" onclick="deleteSelected()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
-      <button class="ph-btn" onclick="toggleSearch('keys')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-      <button class="ph-btn" onclick="openCreateModal()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    </div>
-  </div>
-  <div class="search-bar" id="search-keys" style="display:none"><input class="search-input" placeholder="Buscar key..." oninput="filterKeys(this.value)"/></div>
-  <div class="scroll-area"><div id="keys-list"><div class="loading"><div class="spinner"></div>Carregando...</div></div></div>
-</div>
+    <div class="home-body">
+      <div class="quick-actions">
+        <div class="qa-btn" onclick="openCreateModal()"><div class="qa-icon">🔑</div><div class="qa-label">Gerar<br>Keys</div></div>
+        <div class="qa-btn" onclick="openPkgModal()"><div class="qa-icon">📦</div><div class="qa-label">Novo<br>Package</div></div>
+        <div class="qa-btn" onclick="showIntegration()"><div class="qa-icon">🔌</div><div class="qa-label">API /<br>Doc</div></div>
+        <div class="qa-btn" onclick="openModal('support-modal')"><div class="qa-icon">🎧</div><div class="qa-label">Suporte<br>24h</div></div>
+      </div>
+      
+      <div class="section-title">Visão Geral</div>
+      <div class="chart-card">
+        <div class="chart-legend"><div class="chart-dot"></div><div class="chart-legend-label" data-i18n="keys_per_day">Keys geradas por dia</div></div>
+        <canvas id="mainChart" style="height:170px;"></canvas>
+      </div>
 
-<!-- ========== DEVICES ========== -->
-<div class="page" id="page-devices">
-  <div class="page-header">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-    <span class="page-header-title">Devices</span>
-    <div class="page-header-actions">
-      <button class="ph-btn" onclick="toggleSearch('devices')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-      <button class="ph-btn" onclick="refreshAll()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></button>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div class="section-title" style="margin-bottom:0;" data-i18n="latest_keys">Últimas Keys</div>
+        <button onclick="navigate('keys')" style="background:none;border:none;color:var(--blue);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;" data-i18n="see_all">Ver todas →</button>
+      </div>
+      <div id="home-keys-list"></div>
     </div>
   </div>
-  <div class="search-bar" id="search-devices" style="display:none"><input class="search-input" placeholder="Buscar device ou key..." oninput="filterDevices(this.value)"/></div>
-  <div class="scroll-area"><div id="devices-list"><div class="loading"><div class="spinner"></div>Carregando...</div></div></div>
-</div>
 
-<!-- ========== PACKAGES ========== -->
-<div class="page" id="page-packages">
-  <div class="page-header">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-    <span class="page-header-title">Packages</span>
-    <div class="page-header-actions"><button class="ph-btn" onclick="openPkgModal()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-  </div>
-  <div class="scroll-area">
-    <div style="padding:12px 14px 0;">
-      <div style="background:#eff6ff;border-radius:12px;padding:12px 14px;margin-bottom:12px;border:1.5px solid #bfdbfe;">
-        <div style="font-size:12px;font-weight:700;color:#1e40af;margin-bottom:4px;">📦 O que são Packages?</div>
-        <div style="font-size:11px;color:#3b82f6;line-height:1.5;">Cada Package tem uma URL de API configurada. Ao gerar keys, você escolhe um Package e as keys são enviadas automaticamente para essa API.</div>
+  <!-- KEYS PAGE -->
+  <div id="page-keys" class="page">
+    <div class="page-header">
+      <div class="page-header-title">Keys <span class="badge current" style="margin-left:5px;font-size:10px;" id="keys-count-pill">0</span></div>
+      <div class="page-header-actions">
+        <button class="ph-btn" onclick="toggleSearch('keys')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button class="ph-btn" onclick="copyAllPending()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+        <button class="ph-btn" onclick="deleteSelected()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
       </div>
     </div>
-    <div id="packages-list"></div>
+    <div class="search-bar" id="search-keys" style="display:none;"><input type="text" class="search-input" placeholder="Buscar key ou tipo..." oninput="filterKeys(this.value)"></div>
+    <div class="scroll-area" id="keys-list"></div>
+    <div style="position:absolute;bottom:100px;right:20px;z-index:90;"><button class="create-btn" style="width:auto;padding:12px 20px;border-radius:30px;box-shadow:0 8px 25px rgba(26,86,232,0.4);" onclick="openCreateModal()">+ Criar Keys</button></div>
   </div>
-</div>
 
-<!-- ========== PROFILE ========== -->
-<div class="page" id="page-profile">
-  <div class="profile-top-bar">
-    <div class="profile-top-avatar">G</div>
-    <div class="profile-top-info">
-      <div class="profile-top-name">GHOST DASH</div>
-      <div class="profile-top-balance">0.00 AC</div>
+  <!-- DEVICES PAGE -->
+  <div id="page-devices" class="page">
+    <div class="page-header">
+      <div class="page-header-title">Devices Conectados</div>
+      <div class="page-header-actions">
+        <button class="ph-btn" onclick="toggleSearch('devices')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        <button class="ph-btn" onclick="refreshAll()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+      </div>
     </div>
-    <button class="profile-logout-btn" onclick="confirmLogout()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      <span data-i18n="logout">Logout</span>
-    </button>
+    <div class="search-bar" id="search-devices" style="display:none;"><input type="text" class="search-input" placeholder="Buscar device ou key..." oninput="filterDevices(this.value)"></div>
+    <div class="scroll-area" id="devices-list"></div>
   </div>
-  <div class="profile-body">
-    <div class="profile-group">
-      <div class="profile-row" onclick="showToast('🔔 Notifications — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><span class="pr-label" data-i18n="notifications">Notifications</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="showToast('👥 Group — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="pr-label" data-i18n="group">Group</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-    <div class="profile-group">
-      <div class="profile-row" onclick="showToast('👤 Change profile info — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="pr-label" data-i18n="change_profile">Change profile info</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="showToast('🔒 Change password — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><span class="pr-label" data-i18n="change_password">Change password</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="showToast('🗝️ Key alias — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg></div><span class="pr-label" data-i18n="key_alias">Key alias</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-    <div class="profile-group">
-      <div class="profile-row" onclick="navigate('login-session')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><span class="pr-label" data-i18n="login_session">Login session</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="showToast('🔐 2FA setting — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="pr-label" data-i18n="twofa">2FA setting</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-    <div class="profile-group">
-      <div class="profile-row" onclick="showToast('🛡️ Privacy and policy — Em breve')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="pr-label" data-i18n="privacy">Privacy and policy</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="openModal('support-modal')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.64 3.44 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><span class="pr-label" data-i18n="support">Support</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="openModal('lang-modal')">
-        <div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span class="pr-label" data-i18n="language">Language</span></div>
-        <span class="pr-val" id="current-lang-label">English</span>
-      </div>
-    </div>
-    <div class="profile-group">
-      <div class="profile-row" onclick="showIntegration()">
-        <div class="profile-row-left"><div class="pr-icon-wrap purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span class="pr-label" data-i18n="integration_code">Código de Integração</span></div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-      <div class="profile-row" onclick="resetAllKeys()">
-        <div class="profile-row-left"><div class="pr-icon-wrap red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div><span class="pr-label" style="color:#ef4444;" data-i18n="clear_keys">Limpar todas as keys</span></div>
-      </div>
-    </div>
-    <div class="profile-version" data-i18n="version">Version: 1.0.0 (Prod)</div>
-  </div>
-</div>
 
-<!-- ========== LOGIN SESSION PAGE ========== -->
-<div class="page" id="page-login-session">
-  <div class="page-header">
-    <button class="ph-btn" onclick="navigate('profile')">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <span class="page-header-title" data-i18n="login_session">Login session</span>
-    <div class="page-header-actions">
-      <button class="ph-btn" onclick="refreshSessions()" title="Atualizar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
-      </button>
-      <button class="ph-btn-text" onclick="clearSessions()" data-i18n="clear">Clear</button>
+  <!-- PACKAGES PAGE -->
+  <div id="page-packages" class="page">
+    <div class="page-header">
+      <div class="page-header-title">Packages / API</div>
+      <div class="page-header-actions"><button class="ph-btn" onclick="openPkgModal()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
     </div>
+    <div class="scroll-area" id="packages-list"></div>
   </div>
-  <div class="scroll-area" style="padding:14px 14px 84px;">
-    <div class="sessions-info-bar">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span class="sessions-info-bar-text">Dispositivos que acessaram ou estão acessando o sistema via API</span>
-    </div>
-    <div id="sessions-list">
-      <div class="loading"><div class="spinner"></div>Carregando sessões reais...</div>
-    </div>
-  </div>
-</div>
 
-<!-- ========== MODAL: CREATE KEY ========== -->
-<div class="modal-overlay" id="create-modal" onclick="closeOnBg(event,'create-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">🔑 Criar Keys</span><button class="modal-close-btn" onclick="closeModal('create-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="form-group">
-      <label class="form-label">Quantidade <span class="req">*</span></label>
-      <input class="form-input" type="number" id="key-qty" value="1" min="1" max="100" oninput="updatePreview()"/>
+  <!-- PROFILE PAGE -->
+  <div id="page-profile" class="page">
+    <div class="profile-top-bar">
+      <div class="profile-top-avatar">G</div>
+      <div class="profile-top-info"><div class="profile-top-name">Ferrao Dev</div><div class="profile-top-balance">Saldo: ∞</div></div>
+      <button class="profile-logout-btn" onclick="confirmLogout()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sair</button>
     </div>
-    <div class="form-group">
-      <label class="form-label">Duração <span class="req">*</span></label>
-      <div class="form-row">
-        <input class="form-input" type="number" id="key-duration" value="1" min="1" oninput="updatePreview()"/>
-        <select class="form-select" id="key-type" onchange="updatePreview()">
-          <option value="hour">Hour</option><option value="day">Day</option>
-          <option value="weekly" selected>Week</option><option value="monthly">Month</option>
-          <option value="lifetime">Lifetime</option>
+    <div class="profile-body">
+      <div class="profile-group">
+        <div class="profile-row"><div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="pr-label" data-i18n="change_profile">Alterar dados do perfil</div><div class="pr-sub">Nome, e-mail e avatar</div></div></div></div>
+        <div class="profile-row"><div class="profile-row-left"><div class="pr-icon-wrap blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="pr-label" data-i18n="change_password">Alterar senha</div><div class="pr-sub">Segurança da conta</div></div></div></div>
+      </div>
+      <div class="profile-group">
+        <div class="profile-row" onclick="navigate('login-session')"><div class="profile-row-left"><div class="pr-icon-wrap orange"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div><div class="pr-label" data-i18n="login_session">Sessão de login</div><div class="pr-sub">Dispositivos ativos agora</div></div></div><div class="pr-val">2</div></div>
+        <div class="profile-row"><div class="profile-row-left"><div class="pr-icon-wrap purple"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="pr-label" data-i18n="twofa">Configuração 2FA</div><div class="pr-sub">Autenticação em duas etapas</div></div></div><span class="badge pending" style="font-size:9px;">OFF</span></div>
+      </div>
+      <div class="profile-group">
+        <div class="profile-row" onclick="openModal('lang-modal')"><div class="profile-row-left"><div class="pr-icon-wrap green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="pr-label" data-i18n="language">Idioma</div><div class="pr-sub" id="current-lang-label">Português (BR)</div></div></div></div>
+        <div class="profile-row" onclick="openModal('support-modal')"><div class="profile-row-left"><div class="pr-icon-wrap green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="pr-label" data-i18n="support">Suporte</div><div class="pr-sub">Falar com um atendente</div></div></div></div>
+      </div>
+      <div class="profile-group">
+        <div class="profile-row" onclick="resetAllKeys()"><div class="profile-row-left"><div class="pr-icon-wrap red"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div><div><div class="pr-label" style="color:var(--red);" data-i18n="clear_keys">Limpar todas as keys</div><div class="pr-sub">Ação irreversível</div></div></div></div>
+      </div>
+      <div style="text-align:center;padding:10px;font-size:11px;color:var(--gray);font-weight:700;letter-spacing:0.05em;" data-i18n="version">Versão: 1.0.0 (Prod)</div>
+    </div>
+  </div>
+
+  <!-- LOGIN SESSION PAGE -->
+  <div id="page-login-session" class="page">
+    <div class="page-header">
+      <button class="ph-btn" onclick="navigate('profile')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="page-header-title">Sessões Ativas</div>
+      <div class="page-header-actions">
+        <button class="ph-btn" onclick="refreshSessions()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+      </div>
+    </div>
+    <div class="scroll-area" style="padding:16px;">
+      <div style="background:var(--blue-l);padding:14px;border-radius:12px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;">ℹ️</div>
+        <div style="font-size:12px;color:var(--blue);font-weight:600;line-height:1.5;">Estas são as sessões reais registradas na sua API. Cada card representa um dispositivo único que ativou uma ou mais keys.</div>
+      </div>
+      <div id="sessions-list"></div>
+      <button class="create-btn" style="background:#f3f4f6;color:var(--red);box-shadow:none;margin-top:20px;border:1px solid #fee2e2;" onclick="clearSessions()">Encerrar todas as sessões</button>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: CREATE KEY ========== -->
+  <div class="modal-overlay" id="create-modal" onclick="closeOnBg(event,'create-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">🔑 Criar Keys</span><button class="modal-close-btn" onclick="closeModal('create-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div class="form-group">
+        <label class="form-label">Quantidade <span class="req">*</span></label>
+        <input class="form-input" type="number" id="key-qty" value="1" min="1" max="100" oninput="updatePreview()"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Duração <span class="req">*</span></label>
+        <div class="form-row">
+          <input class="form-input" type="number" id="key-duration" value="1" min="1" oninput="updatePreview()"/>
+          <select class="form-select" id="key-type" onchange="updatePreview()">
+            <option value="hour">Hour</option><option value="day">Day</option>
+            <option value="weekly" selected>Week</option><option value="monthly">Month</option>
+            <option value="lifetime">Lifetime</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Package / Destino API <span class="req">*</span></label>
+        <select class="form-select" id="key-package" onchange="updatePreview()"><option value="">— Selecionar package —</option></select>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-row-txt"><div class="tl">Auto clean key</div><div class="ts">Remove keys não usadas/expiradas</div></div>
+        <div class="toggle off" id="auto-clean-tog" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="preview-label">Preview da key</div>
+      <div class="preview-box" id="key-preview">GHOST-weekly-xxxxxxxxxxxxxxxxxx</div>
+      <div id="generated-results" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;margin-top:15px;">
+          <span style="font-size:13px;font-weight:700;color:var(--text);">✅ Keys Geradas</span>
+          <button onclick="copyAllGenerated()" style="background:var(--blue);border:none;cursor:pointer;color:#fff;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:inherit;">Copiar Todas</button>
+        </div>
+        <div id="generated-keys-list"></div>
+      </div>
+      <button class="create-btn" id="create-btn-main" onclick="createKeys()">✦ Gerar Keys</button>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: ADD PACKAGE ========== -->
+  <div class="modal-overlay" id="pkg-modal" onclick="closeOnBg(event,'pkg-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">📦 Novo Package</span><button class="modal-close-btn" onclick="closeModal('pkg-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div class="form-group"><label class="form-label">Nome do Package <span class="req">*</span></label><input class="form-input" id="pkg-name" placeholder="Ex: api, loja1, scripts..."/></div>
+      <div class="form-group"><label class="form-label">URL da API <span class="req">*</span></label><input class="form-input" id="pkg-url" placeholder="https://sua-api.com/keys" type="url"/><div class="form-hint">As keys serão enviadas via POST para essa URL (URL ficará oculta)</div></div>
+      <div class="form-group"><label class="form-label">Descrição (opcional)</label><input class="form-input" id="pkg-desc" placeholder="Ex: API do sistema de scripts..."/></div>
+      <button class="create-btn" onclick="addPackage()">+ Adicionar Package</button>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: INTEGRATION ========== -->
+  <div class="modal-overlay" id="integration-modal" onclick="closeOnBg(event,'integration-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">🔌 Integração</span><button class="modal-close-btn" onclick="closeModal('integration-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Verificar key (JavaScript/Fetch)</div>
+      <div class="preview-box" id="integration-js" style="font-size:11px;line-height:1.7;cursor:pointer;text-align:left;white-space:pre-wrap;" onclick="copyIntegration('js')"></div>
+      <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin:12px 0 8px;">Verificar key (Luau / Roblox)</div>
+      <div class="preview-box" id="integration-luau" style="font-size:11px;line-height:1.7;cursor:pointer;text-align:left;white-space:pre-wrap;" onclick="copyIntegration('luau')"></div>
+      <div style="font-size:11px;color:var(--gray);margin-top:8px;">👆 Clique no código para copiar</div>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: DEVICE ACTION ========== -->
+  <div class="modal-overlay" id="device-action-modal" onclick="closeOnBg(event,'device-action-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">📱 Ações do Device</span><button class="modal-close-btn" onclick="closeModal('device-action-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div class="device-action-info"><div class="device-action-info-key" id="da-key-text">–</div><div class="device-action-info-dev" id="da-dev-text">–</div></div>
+      <div class="device-action-list">
+        <div class="device-action-item" onclick="doDeviceAction('reset')">
+          <div class="dai-icon reset"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></div>
+          <div><div class="dai-label">Resetar Device</div><div class="dai-sub">Remove o vínculo com o device, key fica disponível novamente</div></div>
+        </div>
+        <div class="device-action-item" onclick="doDeviceAction('revoke')">
+          <div class="dai-icon revoke"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+          <div><div class="dai-label" style="color:#ef4444;">Revogar Device</div><div class="dai-sub">Exclui a key permanentemente da API e do sistema</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: LANGUAGE ========== -->
+  <div class="modal-overlay" id="lang-modal" onclick="closeOnBg(event,'lang-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">🌐 Language</span><button class="modal-close-btn" onclick="closeModal('lang-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div>
+        <div class="lang-option" onclick="setLanguage('en')"><span class="lang-flag">🇺🇸</span><span class="lang-name">English</span><div class="lang-check" id="lang-check-en"></div></div>
+        <div class="lang-option" onclick="setLanguage('pt')"><span class="lang-flag">🇧🇷</span><span class="lang-name">Português (BR)</span><div class="lang-check" id="lang-check-pt"></div></div>
+        <div class="lang-option" onclick="setLanguage('vi')"><span class="lang-flag">🇻🇳</span><span class="lang-name">Tiếng Việt</span><div class="lang-check" id="lang-check-vi"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: SUPPORT ========== -->
+  <div class="modal-overlay" id="support-modal" onclick="closeOnBg(event,'support-modal')">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><span class="modal-title">🎧 Support</span><button class="modal-close-btn" onclick="closeModal('support-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+      <div class="support-hero"><div class="support-hero-icon">🛟</div><div class="support-hero-title">Como podemos ajudar?</div><div class="support-hero-sub">Preencha o formulário e responderemos em breve via Discord</div></div>
+      <div class="form-group"><label class="form-label">Nome <span class="req">*</span></label><input class="form-input" id="support-name" placeholder="Seu nome ou usuário..."/></div>
+      <div class="form-group">
+        <label class="form-label">Problema <span class="req">*</span></label>
+        <select class="form-select" id="support-problem">
+          <option value="">— Selecione o tipo de problema —</option>
+          <option value="Key não funciona">🔑 Key não funciona</option>
+          <option value="Erro ao gerar key">⚠️ Erro ao gerar key</option>
+          <option value="Problema com device">📱 Problema com device</option>
+          <option value="Problema com package">📦 Problema com package</option>
+          <option value="Erro de login">🔐 Erro de login</option>
+          <option value="Pagamento / Plano">💳 Pagamento / Plano</option>
+          <option value="Outro">❓ Outro</option>
         </select>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Package / Destino API <span class="req">*</span></label>
-      <select class="form-select" id="key-package" onchange="updatePreview()"><option value="">— Selecionar package —</option></select>
-      <!-- URL hint hidden intentionally -->
-    </div>
-    <div class="toggle-row">
-      <div class="toggle-row-txt"><div class="tl">Auto clean key</div><div class="ts">Remove keys não usadas/expiradas</div></div>
-      <div class="toggle off" id="auto-clean-tog" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></div>
-    </div>
-    <div class="preview-label">Preview da key</div>
-    <div class="preview-box" id="key-preview">GHOST-weekly-xxxxxxxxxxxxxxxxxx</div>
-    <div id="generated-results" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <span style="font-size:13px;font-weight:700;color:var(--text);">✅ Keys Geradas</span>
-        <button onclick="copyAllGenerated()" style="background:var(--blue);border:none;cursor:pointer;color:#fff;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:inherit;">Copiar Todas</button>
-      </div>
-      <div id="generated-keys-list"></div>
-    </div>
-    <button class="create-btn" id="create-btn-main" onclick="createKeys()">✦ Gerar Keys</button>
-  </div>
-</div>
-
-<!-- ========== MODAL: ADD PACKAGE ========== -->
-<div class="modal-overlay" id="pkg-modal" onclick="closeOnBg(event,'pkg-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">📦 Novo Package</span><button class="modal-close-btn" onclick="closeModal('pkg-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="form-group"><label class="form-label">Nome do Package <span class="req">*</span></label><input class="form-input" id="pkg-name" placeholder="Ex: api, loja1, scripts..."/></div>
-    <div class="form-group"><label class="form-label">URL da API <span class="req">*</span></label><input class="form-input" id="pkg-url" placeholder="https://sua-api.com/keys" type="url"/><div class="form-hint">As keys serão enviadas via POST para essa URL (URL ficará oculta)</div></div>
-    <div class="form-group"><label class="form-label">Descrição (opcional)</label><input class="form-input" id="pkg-desc" placeholder="Ex: API do sistema de scripts..."/></div>
-    <button class="create-btn" onclick="addPackage()">+ Adicionar Package</button>
-  </div>
-</div>
-
-<!-- ========== MODAL: INTEGRATION ========== -->
-<div class="modal-overlay" id="integration-modal" onclick="closeOnBg(event,'integration-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">🔌 Integração</span><button class="modal-close-btn" onclick="closeModal('integration-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Verificar key (JavaScript/Fetch)</div>
-    <div class="preview-box" id="integration-js" style="font-size:11px;line-height:1.7;cursor:pointer;" onclick="copyIntegration('js')"></div>
-    <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;margin:12px 0 8px;">Verificar key (Luau / Roblox)</div>
-    <div class="preview-box" id="integration-luau" style="font-size:11px;line-height:1.7;cursor:pointer;" onclick="copyIntegration('luau')"></div>
-    <div style="font-size:11px;color:var(--gray);margin-top:8px;">👆 Clique no código para copiar</div>
-  </div>
-</div>
-
-<!-- ========== MODAL: DEVICE ACTION ========== -->
-<div class="modal-overlay" id="device-action-modal" onclick="closeOnBg(event,'device-action-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">📱 Ações do Device</span><button class="modal-close-btn" onclick="closeModal('device-action-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="device-action-info"><div class="device-action-info-key" id="da-key-text">–</div><div class="device-action-info-dev" id="da-dev-text">–</div></div>
-    <div class="device-action-list">
-      <div class="device-action-item" onclick="doDeviceAction('reset')">
-        <div class="dai-icon reset"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg></div>
-        <div><div class="dai-label">Resetar Device</div><div class="dai-sub">Remove o vínculo com o device, key fica disponível novamente</div></div>
-      </div>
-      <div class="device-action-item" onclick="doDeviceAction('revoke')">
-        <div class="dai-icon revoke"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-        <div><div class="dai-label" style="color:#ef4444;">Revogar Device</div><div class="dai-sub">Exclui a key permanentemente da API e do sistema</div></div>
-      </div>
+      <div class="form-group"><label class="form-label">Descrição — explique o problema <span class="req">*</span></label><textarea class="form-textarea" id="support-desc" placeholder="Descreva o problema com o máximo de detalhes possível..." rows="5"></textarea></div>
+      <button class="create-btn" id="support-send-btn" onclick="sendSupportTicket()">📨 Enviar para o Suporte</button>
     </div>
   </div>
-</div>
 
-<!-- ========== MODAL: LANGUAGE ========== -->
-<div class="modal-overlay" id="lang-modal" onclick="closeOnBg(event,'lang-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">🌐 Language</span><button class="modal-close-btn" onclick="closeModal('lang-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div>
-      <div class="lang-option" onclick="setLanguage('en')"><span class="lang-flag">🇺🇸</span><span class="lang-name">English</span><div class="lang-check" id="lang-check-en"></div></div>
-      <div class="lang-option" onclick="setLanguage('pt')"><span class="lang-flag">🇧🇷</span><span class="lang-name">Português (BR)</span><div class="lang-check" id="lang-check-pt"></div></div>
-      <div class="lang-option" onclick="setLanguage('vi')"><span class="lang-flag">🇻🇳</span><span class="lang-name">Tiếng Việt</span><div class="lang-check" id="lang-check-vi"></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ========== MODAL: SUPPORT ========== -->
-<div class="modal-overlay" id="support-modal" onclick="closeOnBg(event,'support-modal')">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header"><span class="modal-title">🎧 Support</span><button class="modal-close-btn" onclick="closeModal('support-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="support-hero"><div class="support-hero-icon">🛟</div><div class="support-hero-title">Como podemos ajudar?</div><div class="support-hero-sub">Preencha o formulário e responderemos em breve via Discord</div></div>
-    <div class="form-group"><label class="form-label">Nome <span class="req">*</span></label><input class="form-input" id="support-name" placeholder="Seu nome ou usuário..."/></div>
-    <div class="form-group">
-      <label class="form-label">Problema <span class="req">*</span></label>
-      <select class="form-select" id="support-problem">
-        <option value="">— Selecione o tipo de problema —</option>
-        <option value="Key não funciona">🔑 Key não funciona</option>
-        <option value="Erro ao gerar key">⚠️ Erro ao gerar key</option>
-        <option value="Problema com device">📱 Problema com device</option>
-        <option value="Problema com package">📦 Problema com package</option>
-        <option value="Erro de login">🔐 Erro de login</option>
-        <option value="Pagamento / Plano">💳 Pagamento / Plano</option>
-        <option value="Bug no sistema">🐛 Bug no sistema</option>
-        <option value="Outro">❓ Outro</option>
-      </select>
-    </div>
-    <div class="form-group"><label class="form-label">Descrição — explique o problema <span class="req">*</span></label><textarea class="form-textarea" id="support-desc" placeholder="Descreva o problema com o máximo de detalhes possível..." rows="5"></textarea></div>
-    <button class="create-btn" id="support-send-btn" onclick="sendSupportTicket()">📨 Enviar para o Suporte</button>
-  </div>
-</div>
-
-<!-- ========== BOTTOM NAV ========== -->
-<nav class="bottom-nav">
-  <div class="nav-item active" onclick="navigate('home')" id="nav-home"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="14" y="3" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="3" y="14" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="14" y="14" width="7" height="7" rx="1.5" opacity="0.85"/></svg><span class="nav-label" data-i18n="nav_home">Home</span></div>
-  <div class="nav-item" onclick="navigate('keys')" id="nav-keys"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg><span class="nav-label" data-i18n="nav_keys">Keys</span></div>
-  <div class="nav-item" onclick="navigate('devices')" id="nav-devices"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="nav-label" data-i18n="nav_devices">Devices</span></div>
-  <div class="nav-item" onclick="navigate('packages')" id="nav-packages"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span class="nav-label" data-i18n="nav_packages">Packages</span></div>
-  <div class="nav-item" onclick="navigate('profile')" id="nav-profile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="nav-label" data-i18n="nav_profile">Profile</span></div>
-</nav>
+  <!-- ========== BOTTOM NAV ========== -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="navigate('home')" id="nav-home"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="14" y="3" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="3" y="14" width="7" height="7" rx="1.5" opacity="0.85"/><rect x="14" y="14" width="7" height="7" rx="1.5" opacity="0.85"/></svg><span class="nav-label" data-i18n="nav_home">Home</span></div>
+    <div class="nav-item" onclick="navigate('keys')" id="nav-keys"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3"/></svg><span class="nav-label" data-i18n="nav_keys">Keys</span></div>
+    <div class="nav-item" onclick="navigate('devices')" id="nav-devices"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="nav-label" data-i18n="nav_devices">Devices</span></div>
+    <div class="nav-item" onclick="navigate('packages')" id="nav-packages"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span class="nav-label" data-i18n="nav_packages">Packages</span></div>
+    <div class="nav-item" onclick="navigate('profile')" id="nav-profile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="nav-label" data-i18n="nav_profile">Profile</span></div>
+  </nav>
 </div>
 
 <script>
+/* ============================================================
+   LOGIN & HWID SYSTEM
+   ============================================================ */
+function getHWID() {
+    let hwid = localStorage.getItem('device_hwid');
+    if (!hwid) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const txt = 'Manus-HWID-FerraoDev';
+        ctx.textBaseline = "top";
+        ctx.font = "14px 'Arial'";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = "#f60";
+        ctx.fillRect(125,1,62,20);
+        ctx.fillStyle = "#069";
+        ctx.fillText(txt, 2, 15);
+        ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+        ctx.fillText(txt, 4, 17);
+        const canvasData = canvas.toDataURL();
+        const rawId = navigator.userAgent + screen.width + screen.height + canvasData;
+        hwid = btoa(rawId).substring(0, 32);
+        localStorage.setItem('device_hwid', hwid);
+    }
+    return hwid;
+}
+
+async function validateKey() {
+    const keyInput = document.getElementById('access-key').value.trim().toUpperCase();
+    const errorMsg = document.getElementById('login-error');
+    const hwid = getHWID();
+
+    if (!keyInput) {
+        errorMsg.innerText = "Por favor, insira uma key.";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/validate-key', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: keyInput, hwid: hwid })
+        });
+        const result = await response.json();
+        if (result.success) {
+            localStorage.setItem('active_key', keyInput);
+            showApp();
+        } else {
+            errorMsg.innerText = result.message;
+            errorMsg.style.display = "block";
+        }
+    } catch (err) {
+        // Fallback local
+        const validKeys = [];
+        for(let i=1; i<=20; i++) validKeys.push(`FERRAODEV${i}`);
+        if (validKeys.includes(keyInput)) {
+            const savedHwid = localStorage.getItem('key_hwid_' + keyInput);
+            if (!savedHwid) {
+                localStorage.setItem('key_hwid_' + keyInput, hwid);
+                localStorage.setItem('active_key', keyInput);
+                showApp();
+            } else if (savedHwid === hwid) {
+                localStorage.setItem('active_key', keyInput);
+                showApp();
+            } else {
+                errorMsg.innerText = "Key já usada em outro dispositivo (HWID).";
+                errorMsg.style.display = "block";
+            }
+        } else {
+            errorMsg.innerText = "Key inválida!";
+            errorMsg.style.display = "block";
+        }
+    }
+}
+
+function showApp() {
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+    if(document.getElementById('mainChart')) renderChart();
+}
+
 /* ============================================================
    DISCORD WEBHOOK
    ============================================================ */
@@ -674,7 +719,6 @@ let chartData=load(STORAGE_KEYS.chartData,{});
 let selectedIds=new Set();
 let deletedIds=new Set(load(STORAGE_KEYS.deleted,[]));
 let activeDeviceKey=null;
-// Track cleared sessions locally
 let clearedSessionDevices=new Set(load('ferrao_cleared_sessions',[]));
 
 /* ============================================================
@@ -727,28 +771,20 @@ async function deleteKeyFromApi(keyId,keyStr){
 
 /* ============================================================
    LOGIN SESSION — REAL DATA from API
-   Real sessions = devices that have actually used keys via the API.
-   We extract device info + activation data from each unique device
-   in the fetched key list. IP is fetched from ipapi if available.
    ============================================================ */
 let realSessions = [];
-
 async function fetchRealSessions(){
   const el=document.getElementById('sessions-list');
   el.innerHTML='<div class="loading"><div class="spinner"></div>Buscando sessões reais...</div>';
-
   try{
     const res=await fetch('https://teste-api-mcok.vercel.app/keys',{cache:'no-store',headers:{'Accept':'application/json'}});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json();
-
     if(!Array.isArray(data) || data.length===0){
       el.innerHTML='<div class="empty"><div class="empty-icon">📱</div><div class="empty-text">Nenhuma sessão encontrada na API</div></div>';
       return;
     }
-
-    // Extract unique devices that have actually activated a key
-    const seenDevices=new Map();
+    const seenDevices = new Map();
     data.forEach(k=>{
       if(k.used && k.device && k.device.trim()!==''){
         const dev=k.device.trim();
@@ -767,7 +803,6 @@ async function fetchRealSessions(){
           });
         } else {
           seenDevices.get(dev).keyCount++;
-          // Use most recent activation
           if((k.activatedAt||0) > seenDevices.get(dev).activatedAt){
             seenDevices.get(dev).activatedAt=k.activatedAt;
             seenDevices.get(dev).expiresAt=k.expiresAt;
@@ -776,19 +811,13 @@ async function fetchRealSessions(){
         }
       }
     });
-
     realSessions = [...seenDevices.values()];
-
     if(realSessions.length===0){
       el.innerHTML='<div class="empty"><div class="empty-icon">📱</div><div class="empty-text">Nenhum device ativo encontrado</div></div>';
       return;
     }
-
-    // Sort: most recently activated first
     realSessions.sort((a,b)=>(b.activatedAt||0)-(a.activatedAt||0));
-
     renderSessionCards(realSessions);
-
   }catch(e){
     console.warn('Sessions fetch error:', e);
     el.innerHTML=`<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-text">Erro ao buscar sessões<br><small style="font-size:11px;color:#9ca3af;">${e.message}</small></div></div>`;
@@ -808,8 +837,6 @@ function detectPlatform(deviceName){
 function renderSessionCards(sessions){
   const el=document.getElementById('sessions-list');
   if(!sessions.length){el.innerHTML='<div class="empty"><div class="empty-icon">📱</div><div class="empty-text">Nenhuma sessão ativa</div></div>';return;}
-
-  // Mark first as "current" (most recent)
   el.innerHTML=sessions.map((s,idx)=>{
     const isCurrent=idx===0;
     const actDate=s.activatedAt>0?new Date(s.activatedAt*1000).toLocaleString('pt-BR'):'–';
@@ -817,7 +844,6 @@ function renderSessionCards(sessions){
     const isExpired=s.expiresAt>0&&s.expiresAt<Date.now()/1000;
     const statusColor=isExpired?'background:#fee2e2;color:#991b1b':'background:#dcfce7;color:#15803d';
     const statusLabel=isExpired?'Expirado':'Ativo';
-
     return `<div class="session-card${isCurrent?' is-current':''}">
       <div class="session-header">
         <div style="display:flex;align-items:center;gap:8px;">
@@ -862,10 +888,8 @@ function renderSessionCards(sessions){
 
 function renderSessions(){ fetchRealSessions(); }
 function refreshSessions(){ showToast('🔄 Atualizando sessões...'); fetchRealSessions(); }
-
 function clearSessions(){
   if(!confirm('Marcar todas as sessões como encerradas? (não revoga as keys)')) return;
-  // Save cleared list locally
   realSessions.forEach(s=>clearedSessionDevices.add(s.device));
   save('ferrao_cleared_sessions',[...clearedSessionDevices]);
   document.getElementById('sessions-list').innerHTML='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">Todas as sessões foram encerradas</div></div>';
@@ -904,7 +928,7 @@ async function sendSupportTicket(){
   btn.disabled=false; btn.textContent='📨 Enviar para o Suporte';
 }
 
-function confirmLogout(){ if(confirm('Tem certeza que deseja sair?')) showToast('👋 Até logo!'); }
+function confirmLogout(){ if(confirm('Tem certeza que deseja sair?')) { localStorage.removeItem('active_key'); location.reload(); } }
 
 /* ============================================================
    STATS & LIMIT
@@ -953,7 +977,7 @@ function renderChart(){
 function renderHomeKeys(){
   const el=document.getElementById('home-keys-list');
   const all=getMergedKeys().slice(0,5);
-  if(!all.length){el.innerHTML='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:13px;">Nenhuma key ainda</div>';return;}
+  if(!all.length){el.innerHTML='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Nenhuma key gerada</div>';return;}
   el.innerHTML=all.map(k=>{
     const b=k.used?'active">Ativa':'pending">Pendente';
     return `<div class="list-item" style="border-radius:12px;margin-bottom:5px;box-shadow:var(--shadow);border:none;"><div class="item-body"><div class="item-key" style="font-size:12.5px;">${k.key}</div><div class="item-meta">${getTypeLabel(k)}</div></div><span class="badge ${b}</span><button class="copy-btn" onclick="copyText('${k.key}');event.stopPropagation();"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>`;
@@ -1056,7 +1080,6 @@ function renderPackages(){
       <div class="pkg-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56e8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
       <div class="pkg-body">
         <div class="pkg-name">${p.name}</div>
-        <!-- URL OCULTA: não exibe o endpoint real -->
         <div class="pkg-url-hidden">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           URL protegida
@@ -1093,7 +1116,6 @@ function addPackage(){
   closeModal('pkg-modal');showToast(`📦 Package "${name}" adicionado!`);
 }
 
-// Select shows only package NAME, not URL
 function updatePkgSelect(){
   const sel=document.getElementById('key-package');if(!sel)return;
   const cur=sel.value;
@@ -1130,8 +1152,8 @@ async function createKeys(){
   const dur=parseInt(document.getElementById('key-duration').value)||1;
   const pkgId=document.getElementById('key-package').value;
   if(!pkgId){showToast('⚠️ Selecione um Package!');return;}
-  if(limitCount>=KEY_LIMIT){showToast('❌ Limite atingido!');return;}
-  const realQty=Math.min(qty,KEY_LIMIT-limitCount);if(realQty<=0){showToast('❌ Limite atingido!');return;}
+  if(limitCount>=KEY_LIMIT){showToast('❌ Limite de 5.000 atingido');return;}
+  const realQty=Math.min(qty,KEY_LIMIT-limitCount);
   const pkg=packages.find(p=>p.id===pkgId);if(!pkg){showToast('⚠️ Package não encontrado');return;}
   const btn=document.getElementById('create-btn-main');btn.disabled=true;btn.textContent='⏳ Gerando...';
   const today=new Date().toISOString().slice(0,10);
@@ -1210,6 +1232,11 @@ async function init(){
   applyLanguage(currentLang);
   updateLimit(0);updatePkgSelect();renderStats();renderHomeKeys();renderChart();
   await fetchRemoteKeys();renderStats();renderHomeKeys();
+  const savedKey = localStorage.getItem('active_key');
+  if (savedKey) {
+      document.getElementById('access-key').value = savedKey;
+      validateKey();
+  }
 }
 
 window.addEventListener('resize',()=>{if(document.getElementById('mainChart'))renderChart();});
