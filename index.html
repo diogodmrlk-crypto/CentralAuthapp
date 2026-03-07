@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Gerador</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700&display=swap');
 
@@ -268,6 +269,75 @@ canvas{width:100%!important;display:block;}
 .limit-pill{background:var(--blue-l);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--blue);}
 
 @media(max-width:430px){.phone{max-height:100dvh;border-radius:0;}html,body{background:var(--bg);}}
+
+/* ===== LOGIN OVERLAY ===== */
+#login-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#0f172a 0%,#1e3a8a 50%,#1a56e8 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Sans',sans-serif;
+}
+#login-overlay.hidden{display:none;}
+.login-card{
+  width:100%;max-width:380px;padding:40px 28px 36px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:28px;
+  backdrop-filter:blur(20px);
+  text-align:center;
+  box-shadow:0 24px 80px rgba(0,0,0,0.45);
+  margin:0 16px;
+}
+.login-logo{
+  width:72px;height:72px;border-radius:20px;
+  background:linear-gradient(135deg,#1a56e8,#1240c0);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  box-shadow:0 8px 32px rgba(26,86,232,0.4);
+}
+.login-logo-letter{
+  font-size:34px;font-weight:800;color:#f59e0b;font-style:italic;
+}
+.login-title{
+  font-size:24px;font-weight:800;color:#fff;margin-bottom:6px;
+}
+.login-subtitle{
+  font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px;line-height:1.5;
+}
+.login-divider{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;
+}
+.login-divider-line{flex:1;height:1px;background:rgba(255,255,255,0.15);}
+.login-divider-text{font-size:12px;color:rgba(255,255,255,0.4);font-weight:600;}
+.google-btn{
+  width:100%;padding:14px 20px;
+  background:#fff;
+  border:none;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:15px;font-weight:700;color:#1f2937;
+  cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+  font-family:'DM Sans',sans-serif;
+}
+.google-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,0.3);}
+.google-btn:active{transform:scale(0.98);}
+.google-btn svg{flex-shrink:0;}
+.login-footer{
+  margin-top:24px;
+  font-size:11px;color:rgba(255,255,255,0.3);
+  line-height:1.6;
+}
+.login-loading{
+  display:none;flex-direction:column;align-items:center;gap:12px;margin-top:20px;
+}
+.login-loading.show{display:flex;}
+.login-spinner{
+  width:32px;height:32px;border:3px solid rgba(255,255,255,0.2);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin 0.75s linear infinite;
+}
+.login-loading-text{font-size:13px;color:rgba(255,255,255,0.7);font-weight:600;}
 </style>
 <style>
 * {
@@ -285,6 +355,38 @@ input, textarea {
 </style>
 </head>
 <body>
+
+<!-- ========== LOGIN OVERLAY ========== -->
+<div id="login-overlay">
+  <div class="login-card">
+    <div class="login-logo"><span class="login-logo-letter">G</span></div>
+    <div class="login-title">Ghost Dash</div>
+    <div class="login-subtitle">Faça login com sua conta Google<br>para acessar o painel</div>
+    <div class="login-divider">
+      <div class="login-divider-line"></div>
+      <span class="login-divider-text">ENTRAR COM</span>
+      <div class="login-divider-line"></div>
+    </div>
+    <button class="google-btn" onclick="triggerGoogleLogin()">
+      <svg width="22" height="22" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Continuar com Google
+    </button>
+    <!-- Container para o botão nativo do Google (fallback) -->
+    <div id="google-btn-container" style="display:none;margin-top:10px;"></div>
+    <div class="login-loading" id="login-loading">
+      <div class="login-spinner"></div>
+      <span class="login-loading-text">Autenticando...</span>
+    </div>
+    <div class="login-footer">Ao entrar, você concorda com os termos de uso.<br>Seus dados são protegidos e não são compartilhados.</div>
+  </div>
+</div>
+
 <div class="phone">
 
 <!-- ========== HOME ========== -->
@@ -922,7 +1024,7 @@ async function sendSupportTicket(){
   btn.disabled=false; btn.textContent='📨 Enviar para o Suporte';
 }
 
-function confirmLogout(){ if(confirm('Tem certeza que deseja sair?')) showToast('👋 Até logo!'); }
+// confirmLogout() definida no bloco de Google Login abaixo
 
 /* ============================================================
    STATS & LIMIT
@@ -1231,7 +1333,215 @@ async function init(){
 }
 
 window.addEventListener('resize',()=>{if(document.getElementById('mainChart'))renderChart();});
-init();
+
+/* ============================================================
+   GOOGLE LOGIN
+   ============================================================ */
+let googleUser = null;
+
+// Client ID do Google OAuth — substitua pelo seu Client ID real
+const GOOGLE_CLIENT_ID = '1060725074195-kbr5u2mta8g6lvhq2qjkl2j3o5e8i4v2.apps.googleusercontent.com';
+
+function triggerGoogleLogin(){
+  document.getElementById('login-loading').classList.add('show');
+  // Aguarda o script do Google carregar
+  if(typeof google === 'undefined' || !google.accounts){
+    setTimeout(triggerGoogleLogin, 300);
+    return;
+  }
+  // Inicializa o Google Identity Services
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleCredential,
+    auto_select: false,
+    cancel_on_tap_outside: false,
+    use_fedcm_for_prompt: false
+  });
+  // Tenta o One Tap prompt
+  google.accounts.id.prompt(notification => {
+    if(notification.isNotDisplayed() || notification.isSkippedMoment() || notification.isDismissedMoment()){
+      document.getElementById('login-loading').classList.remove('show');
+      // Fallback: renderiza botão nativo do Google
+      const container = document.getElementById('google-btn-container');
+      if(container){
+        container.innerHTML = '';
+        google.accounts.id.renderButton(container, {
+          theme: 'outline',
+          size: 'large',
+          width: 320,
+          text: 'continue_with',
+          shape: 'rectangular',
+          logo_alignment: 'left'
+        });
+        container.style.display = 'flex';
+        container.style.justifyContent = 'center';
+        container.style.marginTop = '8px';
+      }
+    }
+  });
+}
+
+function openGoogleOAuthPopup(){
+  const clientId = GOOGLE_CLIENT_ID;
+  const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+  const scope = encodeURIComponent('openid email profile');
+  const nonce = Math.random().toString(36).substring(2);
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token+id_token&scope=${scope}&nonce=${nonce}&prompt=select_account`;
+  
+  const w = 480, h = 600;
+  const left = (screen.width/2)-(w/2);
+  const top = (screen.height/2)-(h/2);
+  const popup = window.open(url,'googleLogin',`width=${w},height=${h},left=${left},top=${top},scrollbars=yes`);
+  
+  const timer = setInterval(()=>{
+    try{
+      if(popup.closed){
+        clearInterval(timer);
+        document.getElementById('login-loading').classList.remove('show');
+        return;
+      }
+      const hash = popup.location.hash;
+      if(hash && hash.includes('id_token=')){
+        clearInterval(timer);
+        popup.close();
+        const params = new URLSearchParams(hash.substring(1));
+        const idToken = params.get('id_token');
+        if(idToken) handleGoogleCredential({credential: idToken});
+      }
+    }catch(e){}
+  }, 300);
+}
+
+function parseJwt(token){
+  try{
+    const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    return JSON.parse(atob(base64));
+  }catch(e){return null;}
+}
+
+async function handleGoogleCredential(response){
+  const payload = parseJwt(response.credential);
+  if(!payload){showToast('⚠️ Erro ao processar login');document.getElementById('login-loading').classList.remove('show');return;}
+  
+  googleUser = {
+    name: payload.name || payload.given_name || 'Usuário',
+    email: payload.email || '',
+    picture: payload.picture || '',
+    given_name: payload.given_name || ''
+  };
+  
+  // Salvar sessão
+  localStorage.setItem('ghost_user', JSON.stringify(googleUser));
+  
+  // Atualizar perfil na UI
+  applyUserProfile(googleUser);
+  
+  // Enviar log para o webhook
+  await sendLoginLog(googleUser);
+  
+  // Esconder overlay e iniciar app
+  document.getElementById('login-overlay').classList.add('hidden');
+  document.getElementById('login-loading').classList.remove('show');
+  init();
+}
+
+function applyUserProfile(user){
+  const initial = (user.given_name || user.name || 'U')[0].toUpperCase();
+  const displayName = user.name || user.email;
+  const email = user.email;
+  
+  // Avatar home
+  const homeAvatar = document.querySelector('.home-header .avatar');
+  if(homeAvatar){
+    if(user.picture){
+      homeAvatar.innerHTML = `<img src="${user.picture}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.textContent='${initial}'">`;
+      homeAvatar.style.background = 'transparent';
+    } else {
+      homeAvatar.textContent = initial;
+    }
+  }
+  
+  // Nome home
+  const homeName = document.querySelector('.home-header .user-name');
+  if(homeName) homeName.textContent = displayName;
+  
+  // Avatar perfil
+  const profAvatar = document.querySelector('.profile-top-avatar');
+  if(profAvatar){
+    if(user.picture){
+      profAvatar.innerHTML = `<img src="${user.picture}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.textContent='${initial}'">`;
+      profAvatar.style.background = 'transparent';
+    } else {
+      profAvatar.textContent = initial;
+    }
+  }
+  
+  // Nome perfil
+  const profName = document.querySelector('.profile-top-name');
+  if(profName) profName.textContent = displayName;
+  
+  // Email como balance
+  const profBalance = document.querySelector('.profile-top-balance');
+  if(profBalance) profBalance.textContent = email;
+}
+
+async function sendLoginLog(user){
+  const now = new Date();
+  const platform = /iPhone|iPad|iPod/.test(navigator.userAgent)?'iOS':/Android/.test(navigator.userAgent)?'Android':/Win/.test(navigator.userAgent)?'Windows':/Mac/.test(navigator.userAgent)?'macOS':'Web/Desktop';
+  const embed = {
+    title: '🔐 Novo Login — Ghost Dash',
+    color: 0x22c55e,
+    thumbnail: user.picture ? {url: user.picture} : undefined,
+    fields: [
+      {name: '👤 Nome', value: user.name || '–', inline: true},
+      {name: '📧 Gmail', value: user.email || '–', inline: true},
+      {name: '🕐 Data/Hora', value: now.toLocaleString('pt-BR'), inline: false},
+      {name: '📱 Plataforma', value: platform, inline: true},
+      {name: '🌐 User-Agent', value: navigator.userAgent.substring(0,100)+'...', inline: false}
+    ],
+    footer: {text: 'Ghost Dash · Login System'},
+    timestamp: now.toISOString()
+  };
+  try{
+    await fetch(DISCORD_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username: '🔐 Ghost Auth', embeds: [embed]}),
+      signal: AbortSignal.timeout(8000)
+    });
+  }catch(e){console.warn('Login log failed:', e.message);}
+}
+
+function confirmLogout(){
+  if(confirm('Tem certeza que deseja sair?')){
+    localStorage.removeItem('ghost_user');
+    googleUser = null;
+    // Mostrar overlay de login novamente
+    document.getElementById('login-overlay').classList.remove('hidden');
+    document.getElementById('login-loading').classList.remove('show');
+    showToast('👋 Até logo!');
+  }
+}
+
+// Verificar sessão salva ao carregar
+(function checkSavedSession(){
+  const saved = localStorage.getItem('ghost_user');
+  if(saved){
+    try{
+      const user = JSON.parse(saved);
+      googleUser = user;
+      // Aguarda DOM estar pronto
+      setTimeout(()=>{
+        applyUserProfile(user);
+        document.getElementById('login-overlay').classList.add('hidden');
+        init();
+      }, 50);
+    }catch(e){
+      localStorage.removeItem('ghost_user');
+    }
+  }
+  // Se não há sessão, o overlay já está visível por padrão
+})();
 </script>
 
 <script>
