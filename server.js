@@ -9,15 +9,6 @@ app.use(express.static(__dirname));
 
 const KEYS_FILE = path.join(__dirname, 'keys.json');
 
-// Initialize keys.json if it doesn't exist
-if (!fs.existsSync(KEYS_FILE)) {
-    const initialKeys = {};
-    for (let i = 1; i <= 20; i++) {
-        initialKeys[`FERRAODEV${i}`] = null;
-    }
-    fs.writeFileSync(KEYS_FILE, JSON.stringify({ keys: initialKeys }, null, 2));
-}
-
 app.post('/api/validate-key', (req, res) => {
     const { key, hwid } = req.body;
     
@@ -26,23 +17,41 @@ app.post('/api/validate-key', (req, res) => {
     }
 
     const data = JSON.parse(fs.readFileSync(KEYS_FILE, 'utf8'));
-    
-    if (!(key in data.keys)) {
+    const keyData = data.keys[key];
+
+    if (!keyData) {
         return res.json({ success: false, message: 'Key inválida!' });
     }
 
-    const storedHwid = data.keys[key];
+    const now = Date.now();
 
-    if (storedHwid === null) {
-        // First time using the key, link it to this HWID
-        data.keys[key] = hwid;
+    // Check if key is expired
+    if (keyData.expiresAt && now > keyData.expiresAt) {
+        return res.json({ success: false, message: 'Esta key expirou e não pode mais ser usada.' });
+    }
+
+    if (keyData.hwid === null) {
+        // First activation
+        keyData.hwid = hwid;
+        // Set expiration if not infinite (-1)
+        if (keyData.durationDays !== -1) {
+            keyData.expiresAt = now + (keyData.durationDays * 24 * 60 * 60 * 1000);
+        }
         fs.writeFileSync(KEYS_FILE, JSON.stringify(data, null, 2));
-        return res.json({ success: true, message: 'Key ativada com sucesso!' });
-    } else if (storedHwid === hwid) {
-        // Key already linked to this HWID
-        return res.json({ success: true, message: 'Bem-vindo de volta!' });
+        return res.json({ 
+            success: true, 
+            message: 'Key ativada com sucesso!', 
+            userData: { level: keyData.level, limit: keyData.limit, canCreatePackage: keyData.packages > 0 } 
+        });
+    } else if (keyData.hwid === hwid) {
+        // Already linked to this device
+        return res.json({ 
+            success: true, 
+            message: 'Bem-vindo de volta!', 
+            userData: { level: keyData.level, limit: keyData.limit, canCreatePackage: keyData.packages > 0 } 
+        });
     } else {
-        // Key used on another HWID
+        // HWID mismatch
         return res.json({ success: false, message: 'Esta key já foi usada em outro dispositivo (HWID).' });
     }
 });
