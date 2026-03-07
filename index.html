@@ -525,7 +525,10 @@ canvas{width:100%!important;display:block;}
     </div>
     <div class="toggle-row">
       <div class="toggle-row-txt"><div class="tl">Auto clean key</div><div class="ts">Remove keys não usadas/expiradas</div></div>
-      <div class="toggle off" id="auto-clean-tog" onclick="this.classList.toggle('off')"><div class="toggle-knob"></div></div>
+      <div class="toggle off" id="auto-clean-tog" onclick="toggleAutoClean()"><div class="toggle-knob"></div></div>
+    </div>
+    <div id="auto-clean-info" style="display:none;background:#e0f2fe;border-radius:10px;padding:10px;margin-top:10px;font-size:11px;color:#075985;font-weight:600;">
+      ⚙️ Auto clean ativado! Keys expiradas/não usadas serão removidas automaticamente.
     </div>
     <div class="preview-label">Preview da key</div>
     <div class="preview-box" id="key-preview">GHOST-weekly-xxxxxxxxxxxxxxxxxx</div>
@@ -676,6 +679,49 @@ let deletedIds=new Set(load(STORAGE_KEYS.deleted,[]));
 let activeDeviceKey=null;
 // Track cleared sessions locally
 let clearedSessionDevices=new Set(load('ferrao_cleared_sessions',[]));
+let autoCleanEnabled=load('ferrao_auto_clean',false);
+
+/* ============================================================
+   AUTO CLEAN FUNCTIONALITY
+   ============================================================ */
+function toggleAutoClean(){
+  autoCleanEnabled=!autoCleanEnabled;
+  save('ferrao_auto_clean',autoCleanEnabled);
+  const tog=document.getElementById('auto-clean-tog');
+  const info=document.getElementById('auto-clean-info');
+  if(autoCleanEnabled){
+    tog.classList.remove('off');
+    if(info)info.style.display='block';
+    showToast('✅ Auto clean ativado!');
+    autoDeleteExpiredKeys();
+  }else{
+    tog.classList.add('off');
+    if(info)info.style.display='none';
+    showToast('❌ Auto clean desativado');
+  }
+}
+
+function autoDeleteExpiredKeys(){
+  if(!autoCleanEnabled)return;
+  const now=Date.now()/1000;
+  const toDelete=[];
+  getMergedKeys().forEach(k=>{
+    if(k.expiresAt>0&&k.expiresAt<now){toDelete.push(k.id);}
+    if(!k.used&&k.createdAt&&(now-k.createdAt)>604800){toDelete.push(k.id);}
+  });
+  if(toDelete.length>0){
+    toDelete.forEach(id=>deletedIds.add(id));
+    save(STORAGE_KEYS.deleted,[...deletedIds]);
+    generatedKeys=generatedKeys.filter(k=>!deletedIds.has(k.id));
+    apiKeys=apiKeys.filter(k=>!deletedIds.has(k.id));
+    save(STORAGE_KEYS.keys,generatedKeys);
+    save(STORAGE_KEYS.apiKeys,apiKeys);
+    renderStats();
+    renderHomeKeys();
+    if(document.getElementById('page-keys').classList.contains('active'))renderKeysList(getMergedKeys());
+    showToast(`🗑️ ${toDelete.length} key(s) expirada(s) removida(s)`);
+  }
+}
 
 /* ============================================================
    NAVIGATION
@@ -971,7 +1017,10 @@ function renderKeysList(keys){
     const badge=k.used?'active">Ativa':'pending">Pendente';
     const isRed=k.key.toUpperCase().includes('-VH');
     const sel=selectedIds.has(k.id);
-    return `<div class="list-item${sel?' selected':''}" onclick="toggleSelect('${k.id}',this)"><div class="item-check${sel?' checked':''}" id="chk-${k.id}"></div><div class="item-body"><div class="item-key${isRed?' red-key':''}">${k.key}</div><div class="item-meta">${getTypeLabel(k)} ${k.device?'· 📱 em uso':''}</div></div><span class="badge ${badge}</span><button class="copy-btn" onclick="copyText('${k.key}');event.stopPropagation();"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>`;
+    const deviceInfo=k.device?`📱 ${k.device}`:'';
+    const activatedDate=k.activatedAt?new Date(k.activatedAt*1000).toLocaleString('pt-BR','').split(',')[0]:'';
+    const metaInfo=[getTypeLabel(k),deviceInfo,activatedDate].filter(Boolean).join(' · ');
+    return `<div class="list-item${sel?' selected':''}" onclick="toggleSelect('${k.id}',this)"><div class="item-check${sel?' checked':''}" id="chk-${k.id}"></div><div class="item-body"><div class="item-key${isRed?' red-key':''}">${k.key}</div><div class="item-meta">${metaInfo}</div></div><span class="badge ${badge}</span><button class="copy-btn" onclick="copyText('${k.key}');event.stopPropagation();"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>`;
   }).join('');
 }
 function filterKeys(val){const v=val.toLowerCase();renderKeysList(getMergedKeys().filter(k=>k.key.toLowerCase().includes(v)||k.type.toLowerCase().includes(v)));}
@@ -1209,7 +1258,17 @@ async function refreshAll(){
 async function init(){
   applyLanguage(currentLang);
   updateLimit(0);updatePkgSelect();renderStats();renderHomeKeys();renderChart();
+  const tog=document.getElementById('auto-clean-tog');
+  const info=document.getElementById('auto-clean-info');
+  if(autoCleanEnabled){
+    tog?.classList.remove('off');
+    if(info)info.style.display='block';
+  }else{
+    tog?.classList.add('off');
+    if(info)info.style.display='none';
+  }
   await fetchRemoteKeys();renderStats();renderHomeKeys();
+  if(autoCleanEnabled)setInterval(autoDeleteExpiredKeys,300000);
 }
 
 window.addEventListener('resize',()=>{if(document.getElementById('mainChart'))renderChart();});
